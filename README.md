@@ -13,3 +13,9 @@ $ git clone https://github.com/ffazil/mythril-test-suite.git
 $ cd mythril-test-suite/
 
 $ docker run -v $PWD/data:/data mythril/myth -v4 analyze /data/mythx-tests/05222022-25/SelfDestructMultiTxFeasible.sol
+
+$ docker run -v $PWD/data:/data mythril/myth -v4 analyze /data/mythx-tests/05222022-25/PredictTheFutureChallenge_before.sol
+
+$ docker run -v $PWD/data:/data mythril/myth -v4 analyze /data/mythx-tests/05222022-25/FiftyYearsChallenge_before.sol
+
+$ docker run -v $PWD/data:/data mythril/myth -v4 analyze /data/mythx-tests/05222022-25/PredictTheFutureChallenge_before.sol
