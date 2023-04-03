@@ -1,25 +1,27 @@
-/*
- * @source: http://blockchain.unica.it/projects/ethereum-survey/attacks.html#simpledao
- * @author: Atzei N., Bartoletti M., Cimoli T
- * Modified by Josselin Feist
- */
-pragma solidity 0.4.24;
+pragma solidity ^0.4.21;
 
-contract SimpleDAO {
-  mapping (address => uint) public credit;
-    
-  function donate(address to) payable public{
-    credit[to] += msg.value;
-  }
-    
-  function withdraw(uint amount) public{
-    if (credit[msg.sender]>= amount) {
-      require(msg.sender.call.value(amount)());
-      credit[msg.sender]-=amount;
+contract TokenSaleChallenge {
+    mapping(address => uint256) public balanceOf;
+    uint256 constant PRICE_PER_TOKEN = 1 ether;
+
+    function TokenSaleChallenge(address _player) public payable {
+        require(msg.value == 1 ether);
     }
-  }  
 
-  function queryCredit(address to) view public returns(uint){
-    return credit[to];
-  }
+    function isComplete() public view returns (bool) {
+        return address(this).balance < 1 ether;
+    }
+
+    function buy(uint256 numTokens) public payable {
+        require(msg.value == numTokens * PRICE_PER_TOKEN);
+
+        balanceOf[msg.sender] += numTokens;
+    }
+
+    function sell(uint256 numTokens) public {
+        require(balanceOf[msg.sender] >= numTokens);
+
+        balanceOf[msg.sender] -= numTokens;
+        msg.sender.transfer(numTokens * PRICE_PER_TOKEN);
+    }
 }
